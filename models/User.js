@@ -20,6 +20,14 @@ const userSchema = new mongoose.Schema({
     trim: true,
     default: null,
   },
+  age:{
+    type:Number, 
+    default:null
+  },
+  gender:{
+    type:String,
+    default:null
+  },
   password: {
     type: String,
     required: true,
@@ -40,7 +48,7 @@ const userSchema = new mongoose.Schema({
   myComments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: "Comment"
     },
   ],
   followers: [
@@ -60,5 +68,5 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
+userSchema.index({ username: 'text' });
 module.exports = mongoose.model("User", userSchema);

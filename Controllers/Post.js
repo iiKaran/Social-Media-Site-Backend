@@ -7,7 +7,7 @@ exports.getAllPosts = async(request, response) =>{
     
     try{
         // console.log("the req is ", request.body?.user)
-        const posts = await Post.find({});
+        const posts = await Post.find({author:request.body?.user?.id});
         return response.status(200).json({
             success: true,
             posts
@@ -128,3 +128,38 @@ exports.editAnPost = async(request , response)=>{
         })
     }
 }
+
+exports.fetchAPost = async(request , response)=>{
+    try{
+        const {postId}= request.body;
+        const post = await Post.findById(postId).populate("likes").populate("author").populate("comments");
+        if(!post){
+            return response.status(404).json({
+                success: false, 
+                message:"Post not found"
+            })
+        }
+        return response.status(200).json({
+            success: true,
+            post
+        })
+    }catch(err){
+        console.log("Error in fetching a post",err); 
+        return response.status(500).json({
+            success:false , 
+            message:"something went wrong"
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
