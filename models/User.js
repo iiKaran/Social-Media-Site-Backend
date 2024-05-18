@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  deletionRequest:{
+     type:Date ,
+     default:null
+  },
   myPosts: [
     {
       type: mongoose.Schema.Types.ObjectId,

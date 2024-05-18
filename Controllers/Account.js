@@ -233,7 +233,7 @@ exports.getallFollowes = async(request , response)=>{
     }
     catch(err){
         console.log("Error in fetching followers",err); 
-        return res.status(500).json({
+        return response.status(500).json({
             success: false, 
             message:"Something Went wrong"
         })
@@ -257,9 +257,34 @@ exports.getallFollowing = async(request , response)=>{
     }
     catch(err){
         console.log("Error in fetching followers",err); 
-        return res.status(500).json({
+        return response.status(500).json({
             success: false, 
             message:"Something Went wrong"
         })
     }
 }
+
+exports.deleteAccountRequest = async(request , response)=>{
+    try{
+        const id = request.body?.user?.id ;
+        const user = await User.findById(id);
+        if(!user){
+            return response.status(404).json({
+                success: false, 
+                message:"User not found"
+            })
+        }
+        user. deletionRequest = Date.now();
+        await user.save();
+
+        return response.status(200).json({
+            success: true,
+            message: "Account deletion requested. Your account will be deleted after 30 days of inactivity."
+        });
+    }
+    catch(err){
+        console.log("Error in fetching followers",err); 
+        return response.status(500).json({
+            success: false, 
+            message:"Something Went wrong"})
+}}

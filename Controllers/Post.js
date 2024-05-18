@@ -1,8 +1,9 @@
 const { response } = require("express");
 const { uploadImagetoCloudinary } = require("../Helpers/ImageUploader");
 const Post = require("../models/Post"); 
+const User = require("../models/User");
 const colors = require("colors/safe");
-uploadImagetoCloudinary
+// uploadImagetoCloudinary
 exports.getAllPosts = async(request, response) =>{
     
     try{
@@ -163,3 +164,49 @@ exports.fetchAPost = async(request , response)=>{
 
 
 
+
+
+exports.getContentFeed = async (request, response) => {
+    try {
+        const currentUserId = request.body?.user?.id;
+
+        if (!currentUserId) {
+            return response.status(401).json({
+                success: false,
+                message: "You are not authorized"
+            });
+        }
+
+        // Fetch the current user to get their followers
+        const currentUser = await User.findById(currentUserId).populate('following');
+
+        if (!currentUser) {
+            return response.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Get the list of follower IDs
+        const followers = currentUser.following.map(follower => follower._id);
+        
+        // Add the current user's ID to the list
+        followers.push(currentUserId);
+
+        // Fetch posts created by the current user and their followers
+        const posts = await Post.find({
+            author: { $in: followers }
+        }).populate('author');
+
+        return response.status(200).json({
+            success: true,
+            posts
+        });
+    } catch (err) {
+        console.log(err);
+        return response.status(500).json({
+            success: false,
+            message: "Something went wrong"
+        });
+    }
+};

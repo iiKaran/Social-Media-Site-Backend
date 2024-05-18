@@ -162,6 +162,8 @@ exports.logIn = async (request, response) => {
                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 httpOnly: true,
             }
+            
+            const userData = await  User.findByIdAndUpdate(user._id, {deletionRequest:null},{new:true});
            return response.cookie("token", token, options).status(200).json({
                 success: true,
                 token,
