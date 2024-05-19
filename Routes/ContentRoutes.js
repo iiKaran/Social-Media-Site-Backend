@@ -2,7 +2,7 @@ const express = require('express');
 const {auth} = require("../MiddleWares/auth")
 const router = express.Router(); 
 const {getAllPosts,createAnPost, deleteAnPost,editAnPost,fetchAPost,getContentFeed,schedulePost} = require("../Controllers/Post");
-const {reactToAPost} = require("../Controllers/like");
+const {reactToAPost} = require("../Controllers/Like")
 const {createComment,editComment,deleteComment, replyToComment,editReply,deleteReply} = require("../Controllers/Comment")
 
 // GET POSTS ALLMYPOSTS SINGLE-POST CONTENT-FEED(post by all users i follow)
