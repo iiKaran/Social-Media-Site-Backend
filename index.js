@@ -36,6 +36,9 @@ cron.schedule('0 0 0 * * *', async () => {
 })
 
 // live
+app.get("/",(req,res)=>{
+    res.send("Live On render")
+})
 app.use("/toodle/api/auth", authRoutes)
 app.use("/toodle/api/content",contentRoutes)
 app.use("/toodle/api/account",accountRoutes)
