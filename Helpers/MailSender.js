@@ -14,9 +14,9 @@ const MailSender = async (email,title , body)=>{
    
    let info = await transporter.sendMail({
     to: `${email}`, 
-    from:`Adverse - Karan Sehgal`, 
+    from:`Toddle Connect`, 
     subject:`${title}`, 
-    html : `Otp for the Adverse Account is ${body}. Dont share this otp with anyone else.`
+    html : `Otp for the Toddle Connect Account is ${body}. Dont share this otp with anyone else.`
    }); 
    return info;
  }
