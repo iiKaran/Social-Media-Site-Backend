@@ -29,7 +29,7 @@ app.use(
 connectDB();
 clouldinaryConnect();
 let cnt = 0 ; 
-cron.schedule('*/5 * * * * *', async () => {
+cron.schedule('0 0 0 * * *', async () => {
     // daily running task to delete all the account which is inactive from 30 days 
     console.log("run")
     await deleteInactiveAccounts();

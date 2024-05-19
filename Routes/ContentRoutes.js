@@ -1,7 +1,7 @@
 const express = require('express');
 const {auth} = require("../MiddleWares/auth")
 const router = express.Router(); 
-const {getAllPosts,createAnPost, deleteAnPost,editAnPost,fetchAPost,getContentFeed} = require("../Controllers/Post");
+const {getAllPosts,createAnPost, deleteAnPost,editAnPost,fetchAPost,getContentFeed,schedulePost} = require("../Controllers/Post");
 const {reactToAPost} = require("../Controllers/like");
 const {createComment,editComment,deleteComment, replyToComment,editReply,deleteReply} = require("../Controllers/Comment")
 
@@ -10,10 +10,12 @@ router.get("/getAllPostsByMe",auth,getAllPosts);
 router.get("/fetchAPost",auth,fetchAPost);
 router.get("/getContentFeed",auth,getContentFeed);
 
-// POST - CREATE EDIT DELETE
+
+// POST - CREATE EDIT DELETE Schdule
 router.post("/createPost",auth,createAnPost);
 router.delete("/removePost", auth ,deleteAnPost);
 router.post("/updatePost", auth ,editAnPost);
+router.post("/schduleApost",auth,schedulePost);
 
 // LIKE OR UNLIKE
 router.post("/reactToAPost", auth ,reactToAPost);
